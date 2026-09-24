@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../css/MovieCard.css";
-import { useFavorites } from "../contexts/Favoritescontext";
+import { useFavorites } from "../contexts/FavoritesContext";
 import MovieModal from "./MovieModal";
 
 function MovieCard({ movie }) {

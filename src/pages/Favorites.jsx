@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
-import { useFavorites } from "../contexts/Favoritescontext";
+import { useFavorites } from "../contexts/FavoritesContext";
 import "../css/Home.css"; // shares the .movies-grid layout
 import "../css/Favorites.css";
 

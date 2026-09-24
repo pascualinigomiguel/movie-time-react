@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { getMovieDetails } from "../services/api";
-import { useFavorites } from "../contexts/Favoritescontext";
+import { useFavorites } from "../contexts/FavoritesContext";
 import "../css/MovieModal.css";
 
 function formatRuntime(min) {

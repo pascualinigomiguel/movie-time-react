@@ -1,8 +1,32 @@
 .main-content {
   flex: 1;
-  padding: 2rem;
-  box-sizing: border-box;
   width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
   display: flex;
   flex-direction: column;
+}
+
+/* Shared page heading (Home + Favorites) */
+.page-header {
+  margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.page-header p {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+@media (max-width: 640px) {
+  .main-content { padding: 1.75rem 1rem 3rem; }
 }

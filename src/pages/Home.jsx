@@ -5,6 +5,7 @@ import "../css/Home.css";
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeQuery, setActiveQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,28 +28,39 @@ function Home() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (!searchQuery.trim()) return
-    if (loading) return
+    if (!searchQuery.trim()) return;
+    if (loading) return;
 
-    setLoading(true)
+    setLoading(true);
     try {
-        const searchResults = await searchMovies(searchQuery)
-        setMovies(searchResults)
-        setError(null)
+      const searchResults = await searchMovies(searchQuery);
+      setMovies(searchResults);
+      setActiveQuery(searchQuery.trim());
+      setError(null);
     } catch (err) {
-        console.log(err)
-        setError("Failed to search movies...")
+      console.log(err);
+      setError("Failed to search movies...");
     } finally {
-        setLoading(false)
+      setLoading(false);
     }
   };
 
   return (
     <div className="home">
+      <header className="page-header">
+        <h1>{activeQuery ? `Results for “${activeQuery}”` : "Popular right now"}</h1>
+        <p>
+          {activeQuery
+            ? `${movies.length} ${movies.length === 1 ? "movie" : "movies"} found`
+            : "What everyone is watching."}
+        </p>
+      </header>
+
       <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"
           placeholder="Search for movies..."
+          aria-label="Search for movies"
           className="search-input"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -58,16 +70,22 @@ function Home() {
         </button>
       </form>
 
-        {error && <div className="error-message">{error}</div>}
+      {error && <div className="error-message">{error}</div>}
 
       {loading ? (
-        <div className="loading">Loading...</div>
-      ) : (
+        <div className="movies-grid" aria-busy="true">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div className="movie-skeleton" key={i} />
+          ))}
+        </div>
+      ) : movies.length > 0 ? (
         <div className="movies-grid">
           {movies.map((movie) => (
             <MovieCard movie={movie} key={movie.id} />
           ))}
         </div>
+      ) : (
+        !error && <p className="empty-results">No movies found. Try a different title.</p>
       )}
     </div>
   );
